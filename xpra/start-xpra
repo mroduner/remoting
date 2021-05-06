@@ -1,0 +1,20 @@
+#!/bin/bash
+[ -z "$HOME" ] && {
+echo "No profile set for user: $USER"
+        exit 1
+}
+
+[ -e "$HOME/.xinitrc" ] && {
+        xpra start \
+        --start-child-after-connect=$HOME/.xinitrc \
+        --mdns=yes \
+        --encoding=vp9 \
+        --exit-with-children \
+        --bind-tcp=0.0.0.0:10000,auth=sys\
+        --pidfile=$HOME/.xpra.pid \
+        ${@:---daemon=yes}
+} || {
+        echo "No $HOME/.xinitrc found"
+        exit 1
+}
+

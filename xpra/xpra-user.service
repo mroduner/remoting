@@ -1,0 +1,13 @@
+[Unit]
+Description=Xpra Remote Application Launcher
+
+[Service]
+Type=forking
+ExecStart=/bin/sh -c "%h/bin/start-xpra"
+ExecStop=/bin/sh -c "kill $(cat %h/.xpra.pid)"
+Restart=on-failure
+PIDFile=%h/.xpra.pid
+
+
+[Install]
+WantedBy=multi-user.target
